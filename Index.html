@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vikas | Cybersecurity Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #00ff41;
+      --dark-green: #00b32c;
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --text: #e0e0e0;
+      --muted: #666;
+      --accent: #00ff41;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      overflow-x: hidden;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,65,0.015) 2px,
+        rgba(0,255,65,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 60px;
+      background: rgba(10,10,10,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,255,65,0.15);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--green);
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+
+    .logo span { color: var(--text); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--green); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 60px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,65,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .hero-content { position: relative; max-width: 700px; }
+
+    .hero-tag {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--green);
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -1px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+
+    h1 .name { color: var(--green); }
+
+    .hero-sub {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: 20px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.6s;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.1em;
+      background: var(--green);
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.8s;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border: 1px solid var(--green);
+      color: var(--green);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: var(--green);
+      color: #000;
+    }
+
+    .btn-ghost {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      background: var(--muted);
+      color: #000;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 100px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--green);
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 48px;
+      border-bottom: 1px solid rgba(0,255,65,0.2);
+      padding-bottom: 16px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: #aaa;
+      line-height: 1.9;
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .about-text strong { color: var(--green); }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .stat-item {
+      background: var(--surface);
+      border: 1px solid rgba(0,255,65,0.1);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+
+    .stat-item:hover { border-color: var(--green); }
+
+    .stat-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    .stat-value {
+      color: var(--green);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid rgba(0,255,65,0.1);
+      padding: 20px;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .skill-card:hover {
+      border-color: var(--green);
+      transform: translateY(-4px);
+      background: var(--surface2);
+    }
+
+    .skill-icon { font-size: 1.5rem; margin-bottom: 10px; }
+
+    .skill-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .skill-level {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--green);
+      letter-spacing: 2px;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid rgba(0,255,65,0.1);
+      padding: 28px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--green);
+      transition: height 0.3s;
+    }
+
+    .project-card:hover::before { height: 100%; }
+    .project-card:hover { border-color: rgba(0,255,65,0.3); }
+
+    .project-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--green);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .coming-soon {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      border: 1px solid var(--muted);
+      padding: 4px 10px;
+      letter-spacing: 2px;
+    }
+
+    /* ROADMAP */
+    .roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(0,255,65,0.08);
+    }
+
+    .roadmap-num {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--green);
+      font-size: 1.4rem;
+      font-weight: 700;
+      min-width: 48px;
+      opacity: 0.5;
+    }
+
+    .roadmap-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .roadmap-content p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .badge-active { background: rgba(0,255,65,0.15); color: var(--green); }
+    .badge-upcoming { background: rgba(255,255,255,0.05); color: var(--muted); }
+
+    /* CONTACT */
+    #contact {
+      text-align: center;
+    }
+
+    #contact h2 { border: none; }
+
+    .contact-subtitle {
+      color: var(--muted);
+      margin-bottom: 40px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid rgba(0,255,65,0.1);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    footer span { color: var(--green); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      nav ul { gap: 20px; }
+      #hero, section { padding-left: 24px; padding-right: 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">V<span>ikas</span><span style="color:var(--green)">_</span></div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">// CYBERSECURITY ENGINEER IN MAKING</div>
+      <h1>Hi, I'm<br/><span class="name">Vikas</span></h1>
+      <div class="hero-sub">
+        > Aspiring Cybersecurity Engineer<br/>
+        > CTF Enthusiast | Ethical Hacker in Training<br/>
+        > Based in Bangalore, India<span class="cursor"></span>
+      </div>
+      <div class="hero-btns">
+        <a href="#projects" class="btn">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Contact Me</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">// 01. ABOUT</div>
+    <h2>Who Am I</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a student from <strong>Bangalore, India</strong>, deeply passionate about
+          <strong>cybersecurity</strong> — the art of finding vulnerabilities before the bad guys do.
+        </p>
+        <p>
+          Currently preparing for <strong>JEE Mains & NEET 2026</strong>, targeting a B.Tech in
+          <strong>CSE / Cybersecurity</strong> at top Bangalore colleges like RVCE, BMSCE, or PES University.
+        </p>
+        <p>
+          When I'm not deep in CTF challenges or exam prep, you'll find me
+          writing <strong>poetry</strong> — because breaking things and building with words
+          aren't so different.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-label">LOCATION</span>
+          <span class="stat-value">Bangalore, India</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">TARGET DEGREE</span>
+          <span class="stat-value">B.Tech CSE / CyberSec</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">EXAMS</span>
+          <span class="stat-value">JEE + NEET 2026</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">FOCUS AREA</span>
+          <span class="stat-value">Ethical Hacking</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">HOBBIES</span>
+          <span class="stat-value">CTFs · Poetry · Music</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">// 02. SKILLS</div>
+    <h2>Tech Arsenal</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🐧</div>
+        <div class="skill-name">Linux / Kali</div>
+        <div class="skill-level">LEARNING</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-level">BEGINNER</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Web Security</div>
+        <div class="skill-level">LEARNING</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔍</div>
+        <div class="skill-name">Network Fundamentals</div>
+        <div class="skill-level">LEARNING</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🚩</div>
+        <div class="skill-name">CTF Challenges</div>
+        <div class="skill-level">ACTIVE</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">Bash Scripting</div>
+        <div class="skill-level">BEGINNER</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔐</div>
+        <div class="skill-name">Cryptography Basics</div>
+        <div class="skill-level">LEARNING</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📡</div>
+        <div class="skill-name">Wireshark / OSINT</div>
+        <div class="skill-level">EXPLORING</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">// 03. PROJECTS</div>
+    <h2>Projects & Writeups</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-tag">CTF WRITEUP</div>
+        <div class="project-title">PicoCTF Challenges</div>
+        <div class="project-desc">Documenting solutions and learning from binary exploitation, web, and crypto challenges.</div>
+        <span class="coming-soon">COMING SOON</span>
+      </div>
+      <div class="project-card">
+        <div class="project-tag">WEB SECURITY</div>
+        <div class="project-title">PortSwigger Labs</div>
+        <div class="project-desc">Hands-on labs covering XSS, SQLi, SSRF, and more from the Web Security Academy.</div>
+        <span class="coming-soon">IN PROGRESS</span>
+      </div>
+      <div class="project-card">
+        <div class="project-tag">PYTHON TOOL</div>
+        <div class="project-title">Security Scripts</div>
+        <div class="project-desc">Small automation and recon tools built while practicing Python for security tasks.</div>
+        <span class="coming-soon">COMING SOON</span>
+      </div>
+      <div class="project-card">
+        <div class="project-tag">TRYHACKME</div>
+        <div class="project-title">Room Walkthroughs</div>
+        <div class="project-desc">Step-by-step walkthroughs of TryHackMe rooms on networking, exploitation, and forensics.</div>
+        <span class="coming-soon">COMING SOON</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="section-label">// 04. ROADMAP</div>
+    <h2>Certification Path</h2>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="roadmap-num">01</div>
+        <div class="roadmap-content">
+          <h3>Foundations <span class="badge badge-active">ACTIVE</span></h3>
+          <p>Linux basics, Networking (TCP/IP, DNS, HTTP), Python scripting, TryHackMe & PicoCTF</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">02</div>
+        <div class="roadmap-content">
+          <h3>CompTIA Security+ <span class="badge badge-upcoming">UPCOMING</span></h3>
+          <p>Entry-level security certification — covers threats, cryptography, network security</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">03</div>
+        <div class="roadmap-content">
+          <h3>CEH — Certified Ethical Hacker <span class="badge badge-upcoming">YEAR 2</span></h3>
+          <p>Penetration testing methodology, vulnerability assessment, hacking tools</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">04</div>
+        <div class="roadmap-content">
+          <h3>OSCP — Offensive Security <span class="badge badge-upcoming">YEAR 3-4</span></h3>
+          <p>The gold standard for ethical hacking. Hands-on 24hr exam. Real-world pentesting.</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">05</div>
+        <div class="roadmap-content">
+          <h3>CISSP — Senior Level <span class="badge badge-upcoming">LONG TERM</span></h3>
+          <p>Management + technical. Required for leadership roles in cybersecurity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">// 05. CONTACT</div>
+    <h2>Get In Touch</h2>
+    <p class="contact-subtitle">> Always open to connect, collaborate, and learn together</p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="btn">📧 Email Me</a>
+      <a href="https://linkedin.com/in/YOUR_PROFILE" class="btn btn-ghost" target="_blank">LinkedIn</a>
+      <a href="https://github.com/YOUR_USERNAME" class="btn btn-ghost" target="_blank">GitHub</a>
+      <a href="https://tryhackme.com/p/YOUR_USERNAME" class="btn btn-ghost" target="_blank">TryHackMe</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Built with <span>❤️</span> by <span>Vikas</span> · Bangalore, India · <span>2025</span>
+  </footer>
+
+</body>
+</html>
